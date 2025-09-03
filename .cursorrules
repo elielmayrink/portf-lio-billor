@@ -1,0 +1,109 @@
+# Cursor Rules for Portfólio Billor (Backend Monolítico)
+
+## Objetivo
+
+- Manter fluxo de desenvolvimento simples e reproduzível com NestJS + PostgreSQL + WebSockets.
+- Priorizar segurança, clareza de código e testes mínimos úteis.
+
+## Comunicação e Assistente
+
+- Responder de forma concisa e objetiva.
+- Explicar mudanças de Docker/Docker Compose detalhadamente quando alterados.
+- Não introduzir grandes refatores sem antes estabilizar build e container.
+
+## Execução local (Docker-first)
+
+- Subir stack:
+  - docker compose up -d --build
+- Logs:
+  - docker compose logs -f api
+- Parar:
+  - docker compose down
+- Parar e limpar volumes (DB):
+  - docker compose down -v
+
+## Endpoints padrão
+
+- API Base: http://localhost:3001/api/v1
+- Health: /health
+- Status: /status
+- Swagger: http://localhost:3001/api/docs
+
+## Banco de Dados
+
+- Postgres (host): localhost:5433 (user: postgres, pass: postgres, db: billor)
+- Postgres (rede compose entre serviços): host db, porta 5432
+- Migrations (via TypeORM CLI):
+  - npm run migration:generate
+  - npm run migration:run
+  - npm run migration:revert
+- Nunca usar synchronize=true em produção. No projeto manter false.
+
+## Variáveis de ambiente
+
+- Backend lê env via ConfigModule + Joi.
+- Padrão (compose):
+  - DB_HOST=db, DB_PORT=5432, DB_USER=postgres, DB_PASSWORD=postgres, DB_NAME=billor
+  - PORT=3000 (mapeado para 3001 no host)
+  - JWT_SECRET (defina localmente ao testar auth)
+
+## Estrutura do código
+
+- src/entities/\*: entidades TypeORM
+- src/users/\*: Users module
+- src/auth/\*: Auth (JWT + guards + strategies)
+- src/migrations/\*: migrations TypeORM
+- src/typeorm.config.ts: config de DataSource (CLI)
+
+## Padrões de código
+
+- TypeScript explícito em interfaces públicas.
+- Nomeação descritiva (evitar nomes curtos e genéricos).
+- DTOs com class-validator; pipes globais já habilitados.
+- Evitar comentários triviais; comentar “porquê” em trechos não óbvios.
+- Não capturar erros sem tratamento útil/log.
+- Evitar aninhamento profundo; usar guard clauses.
+
+## Segurança
+
+- Helmet + CORS habilitados globalmente.
+- JWT Bearer obrigatório em rotas protegidas.
+- Rate limiting apenas em rotas públicas sensíveis (ex.: login) quando adicionadas.
+
+## Observabilidade
+
+- Manter health endpoint ativo.
+- Futuro: adicionar logs estruturados e métricas de latência p95 por interceptor.
+
+## Testes
+
+- Unit com Jest (mínimo: services/guards críticos).
+- e2e básicos: auth flow, CRUDs principais, tracking quando existir.
+
+## Regras de edição
+
+- Não alterar docker-compose.yml sem justificar portas/volumes.
+- Ao criar novas entidades, gerar migrations em seguida (não usar synchronize).
+- Não remover índices únicos sem discutir impacto (email/placa, etc.).
+- Ao adicionar WebSocket, autenticar no handshake e documentar eventos/contratos.
+
+## Scripts úteis (backend)
+
+- dev: npm run start:dev
+- build: npm run build
+- lint: npm run lint
+- test: npm run test
+- typeorm: npm run typeorm -- <cmd>
+- migration:generate | migration:run | migration:revert
+
+## Dicas de DX
+
+- Ao dar 404 em rota recém-criada: rebuild container (cache do Dockerfile).
+- Em erro de ValidationPipe: garantir class-validator/class-transformer instalados.
+- Em erro de entidades TypeORM: conferir registro de entidades e relações.
+
+## Roadmap (alto nível)
+
+- Auth e Users prontos → CRUDs de domain (`drivers`, `trucks`, `freights`).
+- Tracking WebSocket (Socket.IO) com JWT no handshake e salas por driver/freight.
+- Observabilidade + testes e2e básicos.

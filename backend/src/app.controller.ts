@@ -14,4 +14,9 @@ export class AppController {
   getHealth() {
     return { status: 'ok', uptime: process.uptime() };
   }
+
+  @Get('status')
+  getStatus() {
+    return { status: 'ok', message: 'API online' };
+  }
 }

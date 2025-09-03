@@ -3,3 +3,8 @@ dist/
 .env
 backend/node_modules/
 backend/dist/
+task.md
+progress-summary.md
+task-prd.md
+websocket.md
+task.md

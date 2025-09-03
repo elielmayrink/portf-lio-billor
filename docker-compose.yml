@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
   adminer:
@@ -24,8 +24,13 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: billor
     ports:
-      - "3000:3000"
+      - "3001:3000"
     depends_on:
       - db
     command: ["node", "dist/main.js"]

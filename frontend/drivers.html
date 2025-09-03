@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciar Motoristas - Billor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Billor - Gerenciar Motoristas</h1>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="users.html">Usuários</a>
+        <a href="trucks.html">Caminhões</a>
+        <a href="drivers.html" class="active">Motoristas</a>
+        <button onclick="logout()" class="btn-logout">Sair</button>
+      </nav>
+    </header>
+
+    <div class="users-container">
+      <div class="users-header">
+        <h2>Gerenciar Motoristas</h2>
+        <button onclick="showCreateForm()" class="btn-primary">+ Novo Motorista</button>
+      </div>
+
+      <div id="createDriverForm" class="create-user-form" style="display: none;">
+        <h3>Criar Novo Motorista</h3>
+        <form id="driverForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Nome:</label>
+              <input type="text" id="name" name="name" required minlength="3">
+            </div>
+            <div class="form-group">
+              <label for="license">CNH:</label>
+              <input type="text" id="license" name="license" required minlength="11" maxlength="11"
+                placeholder="Somente números">
+            </div>
+            <div class="form-group">
+              <label for="userId">Usuário:</label>
+              <select id="userId" name="userId" required>
+                <option value="">Selecione um usuário...</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <button type="submit" class="btn-primary">Criar Motorista</button>
+            <button type="button" onclick="hideCreateForm()" class="btn-secondary">Cancelar</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="messages"></div>
+
+      <div class="table-container">
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>CNH</th>
+              <th>Status</th>
+              <th>UserId</th>
+              <th>Criado em</th>
+              <th>Atualizado em</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="driversTableBody">
+            <tr>
+              <td colspan="8" style="text-align: center;">Carregando motoristas...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="api.js"></script>
+  <script src="drivers.js"></script>
+</body>
+
+</html>

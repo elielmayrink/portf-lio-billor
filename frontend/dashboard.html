@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Billor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Billor - Dashboard</h1>
+      <nav>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="users.html">Usuários</a>
+        <a href="trucks.html">Caminhões</a>
+        <button onclick="logout()" class="btn-logout">Sair</button>
+      </nav>
+    </header>
+
+    <main>
+      <div class="welcome-section">
+        <h2>Bem-vindo, <span id="userEmail">...</span>!</h2>
+        <p>Role: <span id="userRole">...</span></p>
+      </div>
+
+      <div class="status-section">
+        <h3>Status da API</h3>
+        <div id="apiStatus" class="status-indicator">
+          Verificando...
+        </div>
+      </div>
+
+      <div class="actions-section">
+        <h3>Ações Rápidas</h3>
+        <div class="action-buttons">
+          <a href="users.html" class="btn">Gerenciar Usuários</a>
+          <a href="trucks.html" class="btn">Gerenciar Caminhões</a>
+          <a href="drivers.html" class="btn">Gerenciar Motoristas</a>
+          <button onclick="checkHealth()" class="btn">Verificar Saúde da API</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="api.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+
+</html>

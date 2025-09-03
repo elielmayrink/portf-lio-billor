@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Billor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="login-card">
+      <div class="login-header">
+        <h1>🚛 Billor</h1>
+        <p>Sistema de Gestão de Fretes</p>
+      </div>
+
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Senha:</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+        <button type="submit" class="btn btn-primary">Entrar</button>
+      </form>
+
+      <div class="login-footer">
+        <p>Use as credenciais de teste:</p>
+        <p><strong>Admin:</strong> admin@demo.local / admin123</p>
+        <p><strong>Driver:</strong> driver@demo.local / driver123</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script src="api.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
